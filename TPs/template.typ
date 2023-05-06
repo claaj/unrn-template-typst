@@ -6,7 +6,7 @@
   // Config de pagina
   set page(
     paper: "a4",
-    header: [#titulo],
+    header: align(right)[#titulo],
     numbering: "1",
     margin: (top: 1in, right: 1in, left: 1in, bottom: 1in),
   )
