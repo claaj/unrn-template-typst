@@ -1,4 +1,4 @@
-#let proyecto(titulo: "", subtitulo: "", autores: (), materia: "", carrera: "", año: "", version: "", body) = {
+#let proyecto(titulo: "", subtitulo: "", indice:"", autores: (), materia: "", carrera: "", año: "", version: "", body) = {
 
   // Setear autores y titulos en el documento
   set document(author: autores, title: titulo)
@@ -54,7 +54,7 @@
             [#pie_pag],
             [#box(
                 width: auto,
-                fill: rgb("#f2f2f2"),
+                fill: rgb("#d0d0d0"),
                 inset: 10pt,
                 radius: 5pt,
                 [#counter(page).display((numero, total) => text[Página #numero de #total], both: true)]
@@ -118,6 +118,11 @@
   titulo_grande
   subtitulo
   linea
+
+  if indice {
+      outline(title: [*Índice*])
+      pagebreak()
+  }
 
   body
 }
