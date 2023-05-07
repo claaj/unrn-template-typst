@@ -66,7 +66,7 @@
 
   // Config de texto
   set text(
-    font: ("IBM Plex Sans", "IBM Plex Serif", "Twemoji"),
+    font: ("IBM Plex Sans", "IBM Plex Serif", "Twemoji", "Linux Libertine"),
     size: 11pt,
     lang: "es",
   )
@@ -96,6 +96,9 @@
   // Agregar numeros a ecuaciones
   set math.equation(numbering: "(1)")
 
+  // Fuente bloque de codigo
+  show raw: set text(font: "IBM Plex Mono")
+
   // Agrega bloque gris atras de bloques de código (Más fachero)
   show raw.where(block: true): block.with(
     fill: rgb("#f2f2f2"),
@@ -103,16 +106,8 @@
     radius: 5pt,
     width: 100%,
   )
-
-  // Resalta las palabras mono individuales.
-  show raw.where(block: false): block.with(
-    fill: rgb("#f2f2f2"),
-    inset: 5pt,
-    radius: 5pt,
-    )
-
-  // Fuente bloque de codigo
-  show raw: set text(font: "IBM Plex Mono")
+  show raw.where(block: true): text.with(size: 10pt)
+  show raw.where(block: false): text.with(size: 11pt)
 
   // Centra los cuadros
   show table: align.with(center)
