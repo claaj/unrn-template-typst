@@ -1,4 +1,16 @@
-#let proyecto(titulo: "", subtitulo: "", indice:"", autores: (), materia: "", carrera: "", año: "", version: "", body) = {
+#let proyecto(
+    titulo: "",
+    subtitulo: "",
+    indice: false,
+    fuente: "Liberation Sans",
+    fuente_mono: "Liberation Mono",
+    autores: (),
+    materia: "",
+    carrera: "",
+    año: "",
+    version: "",
+    body
+    ) = {
 
   // Setear autores y titulos en el documento
   set document(author: autores, title: titulo)
@@ -12,8 +24,7 @@
       gutter: 9%,
       rows: (auto, auto),
       [#carrera],
-      [#materia - #año],
-    )
+      [#materia - #año],)
 
   // Logo de la UNRN
   let unrn-logo = align(left)[#image("UNRN-color.png", width: 75%)]
@@ -23,19 +34,17 @@
 
   // Encabezado del documento
   let header-unrn = grid(
-      columns: (auto, auto),
-      rows: (auto),
-      [#unrn-logo],[#doc-titulo],
-    )
+    columns: (auto, auto),
+    rows: (auto),
+    [#unrn-logo],[#doc-titulo],)
 
+  // Pie de pagina
   let pie_pag = align(left)[
       #box(
           width: auto,
           fill: rgb("#ffffff"),
           inset: 10pt,
-          [#version]
-          )
-      ]
+          [#version])]
 
   // Config de pagina
   set page(
@@ -48,28 +57,23 @@
     footer: [
         // Config del pie de pag
         #set text(9pt)
-        #set align(end)
         #grid(
             columns: (50%, 50%),
             [#pie_pag],
-            [#box(
+            [#set align(end)
+            #box(
                 width: auto,
                 fill: rgb("#d0d0d0"),
                 inset: 10pt,
                 radius: 5pt,
-                [#counter(page).display((numero, total) => text[Página #numero de #total], both: true)]
-             )
-          ]
-        )
-      ]
-    )
+                [#counter(page).display((numero, total) => text[Página #numero de #total], both: true)])])
+      ])
 
   // Config de texto
   set text(
-    font: ("IBM Plex Sans", "IBM Plex Serif", "Twemoji", "Linux Libertine"),
+    font: (fuente, "Twemoji", "Linux Libertine"),
     size: 11pt,
-    lang: "es",
-  )
+    lang: "es",)
 
   // Setear headings
   show heading.where(level: 1): it => grid(
@@ -97,15 +101,15 @@
   set math.equation(numbering: "(1)")
 
   // Fuente bloque de codigo
-  show raw: set text(font: "IBM Plex Mono")
+  show raw: set text(font: fuente_mono)
 
   // Agrega bloque gris atras de bloques de código (Más fachero)
   show raw.where(block: true): block.with(
     fill: rgb("#f2f2f2"),
     inset: 10pt,
     radius: 5pt,
-    width: 100%,
-  )
+    width: 100%,)
+
   show raw.where(block: true): text.with(size: 10pt)
   show raw.where(block: false): text.with(size: 11pt)
 
@@ -126,7 +130,6 @@
 
   body
 }
-
 
 // Creamos linea para poder llamarla directamente
 #let linea = line(length: 100%, stroke: 0.25pt)
@@ -150,18 +153,19 @@
 
     // Grilla donde ira de un lado la caja con el signo y del otro lado el contenido
     let grilla = grid(
-                    columns: (40pt, auto),
-                    [#excl], [
-                        #set align(horizon)
-                        #set align(left)
-                        #contenido])
+        columns: (40pt, auto),
+        [#excl], 
+        [
+         #set align(horizon)
+         #set align(left)
+         #contenido
+        ])
 
     // Caja que contiene la grilla
     box(
         inset: 10pt,
         width: auto,
         stroke: 0.25pt,
-        grilla,
-    )
+        grilla,)
 }
 
