@@ -14,11 +14,11 @@
   set document(author: autores, title: titulo)
 
   // Creamos lineas
-  let linea = line(length: 100%, stroke: 0.25pt)
+  let linea = line(length: 100%, stroke: 0.15pt)
 
   // Titulo de documento
   let doc-titulo = [#set align(left)
-    #titulo]
+    #upper(titulo)]
   let numeros = [#set align(end)
     #counter(page).display("1")]
   let grilla_header = grid(
@@ -31,7 +31,9 @@
   set page(
     paper: "a4",
     header: [
+        #set text(size: 9pt)
         #grilla_header
+        #linea
       ],
     margin: (top: 1in, right: 1in, left: 1in, bottom: 1in),)
 
@@ -40,14 +42,6 @@
     font: (fuente, "Twemoji", "Linux Libertine"),
     size: 11pt,
     lang: "es")
-
-  // Setear headings
-  show heading.where(level: 1): it => grid(
-      columns:(auto),
-      rows: (auto, auto),
-      gutter: (1.5%),
-      [#align(right)[#it]],
-      [#linea])
 
   // Agregar numeros a ecuaciones
   set math.equation(numbering: "(1)")
@@ -100,7 +94,7 @@
 }
 
 // Creamos linea para poder llamarla directamente
-#let linea = line(length: 100%, stroke: 0.25pt)
+#let linea = line(length: 100%, stroke: 0.15pt)
 
 // Crear cuadro para contenidos importantes
 // Crea un cuadro con un signo de exclamacion
