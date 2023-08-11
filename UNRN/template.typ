@@ -2,12 +2,14 @@
     titulo: "",
     subtitulo: "",
     indice: false,
-    fuente: "Liberation Sans",
+    caratula: false,
+    fuente: "Linux Biolinum O",
     fuente_mono: "Liberation Mono",
     autores: (),
     materia: "",
     carrera: "",
     año: "",
+    fecha: "",
     version: "",
     body
     ) = {
@@ -63,16 +65,16 @@
             [#set align(end)
             #box(
                 width: auto,
-                fill: rgb("#d0d0d0"),
-                inset: 10pt,
-                radius: 5pt,
+                fill: rgb("#cccccc"),
+                inset: 8pt,
+                radius: 3pt,
                 [#counter(page).display((numero, total) => text[Página #numero de #total], both: true)])])
       ])
 
   // Config de texto
   set text(
     font: (fuente, "Twemoji", "Linux Libertine"),
-    size: 11pt,
+    size: 12pt,
     lang: "es",)
 
   // Setear headings
@@ -106,22 +108,51 @@
   // Agrega bloque gris atras de bloques de código (Más fachero)
   show raw.where(block: true): block.with(
     fill: rgb("#f2f2f2"),
-    inset: 10pt,
-    radius: 5pt,
+    inset: 7pt,
+    radius: 3pt,
     width: 100%,)
 
   show raw.where(block: true): text.with(size: 10pt)
-  show raw.where(block: false): text.with(size: 11pt)
+  show raw.where(block: false): text.with(size: 12pt)
+
+  show parbreak: it => {
+    it
+    v(10pt)
+  }
 
   // Centra los cuadros
   show table: align.with(center)
 
   // Justificar cuerpo.
-  set par(justify: true)
+  set par(justify: true, leading: 1.5em,)
+  
 
+  v(15pt)
   titulo_grande
   subtitulo
   linea
+
+  if caratula {
+    set align(center)
+    v(50pt)
+    [
+    #set text(13pt)
+    #for autor in autores {
+        if autor == autores.last() {
+            autor
+        } else {
+                autor + ", "
+        }
+    }
+    #v(50pt)
+    Universidad Nacional de Río Negro
+    #v(50pt)
+    #materia
+    #v(50pt)
+    #fecha
+    #pagebreak()
+    ]
+  }
 
   if indice {
       outline(title: [*Índice*])
