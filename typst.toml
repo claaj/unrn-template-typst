@@ -1,0 +1,8 @@
+[package]
+name = "unrn-template"
+version = "1.0.0"
+entrypoint = "template.typ"
+authors = ["claaj"]
+license = "GPL-3.0"
+description = "UNRN template"
+
