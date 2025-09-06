@@ -1,58 +1,61 @@
-#let proyecto(
-  titulo: "",
-  subtitulo: "",
-  indice: false,
-  caratula: false,
-  fuente: "IBM Plex Sans",
-  fuente_mono: "IBM Plex Mono",
-  autores: (),
-  materia: "",
-  carrera: "",
-  año: "",
-  fecha: "",
+#let classic(
+  title: "",
+  subtitle: "",
+  toc: false,
+  cover: false,
+  font: "IBM Plex Sans",
+  monofont: "IBM Plex Mono",
+  authors: (),
+  subject: "",
+  career: "",
+  year: "",
+  date: "",
   version: "",
-  color_fondo_codigo: rgb("#f2f2f2"),
+  colormonoblock: rgb("#f2f2f2"),
   body,
 ) = {
-  if titulo == "" {
-    error("El título es obligatorio")
+  if title == "" {
+    error("Failed to read title")
   }
-  if autores == () {
-    error("Debe proporcionar al menos un autor")
+  if authors == () {
+    error("Failed to read author/s")
   }
-  if materia == "" {
-    errgr("La materia es obligatoria")
+  if subject == "" {
+    errgr("Failed to read subject")
   }
-  if carrera == "" {
-    error("La carrera es obligatoria")
+  if career == "" {
+    error("Failed to read career")
   }
-  if año == "" {
-    error("El año es obligatorio")
+  if year == "" {
+    error("Failed to read year")
   }
-  if fecha == "" {
-    error("La fecha es obligatoria")
+  if date == "" {
+    error("Failed to read date")
   }
 
-  set document(author: autores, title: titulo)
-  set text(font: (fuente), size: 10pt)
+  let authors_str = authors.join(", ")
+  // let authors_str = authors.map(a => a.name.slice(1, -1)).join(", ")
 
-  let linea = line(length: 100%, stroke: 0.25pt)
+  set document(author: authors_str, title: title)
+  set text(font: (font), size: 10pt)
 
-  let columna-der = grid(
+  let simple-line = line(length: 100%, stroke: 0.25pt)
+
+  let right-col = grid(
     columns: (100%),
     gutter: 9%,
     rows: (auto, auto),
-    [#carrera],
-    [#materia - #año],
+    [#career],
+    [#subject - #year],
   )
 
   let unrn-logo = align(left)[#image("images/UNRN-color.png", width: 75%)]
 
-  let doc-titulo = align(right)[#columna-der]
+  let header-title = align(right)[#right-col]
 
-  let header-unrn = grid(columns: (auto, auto), rows: (auto), [#unrn-logo], [#doc-titulo])
+  let header-unrn = grid(columns: (auto, auto), rows: (auto), [#unrn-logo], [#header-title])
 
-  let pie_pag = align(left)[
+  let footer = align(left)[
     #box(width: auto, fill: rgb("#ffffff"), inset: 10pt, [#version])
   ]
 
@@ -67,7 +70,7 @@
       #set text(9pt)
       #grid(
         columns: (50%, 50%),
-        [#pie_pag],
+        [#footer],
         [#set align(end)
           #box(
             width: auto,
@@ -85,28 +88,28 @@
     rows: (auto, auto),
     gutter: (1.5%),
     [#align(right)[#it]],
-    [#linea],
+    [#simple-line],
   )
 
-  let vacio(..) = ""
-  set heading(numbering: vacio)
+  let empty(..) = ""
+  set heading(numbering: empty)
 
-  let titulo_grande = [
+  let big-title = [
     #set text(24pt, weight: "extrabold")
     #set align(center)
-    *#titulo*
+    *#title*
   ]
 
-  let subtitulo = [
+  let big-subtitle = [
     #set text(16pt, weight: "extrabold")
     #set align(center)
-    #subtitulo
+    #subtitle
   ]
 
   set math.equation(numbering: "(1)")
 
-  show raw: set text(font: fuente_mono)
-  show raw.where(block: true): block.with(fill: color_fondo_codigo, inset: 7pt, radius: 3pt, width: 100%)
+  show raw: set text(font: monofont)
+  show raw.where(block: true): block.with(fill: colormonoblock, inset: 7pt, radius: 3pt, width: 100%)
   show raw.where(block: true): text.with(size: 10pt)
   show raw.where(block: false): text.with(size: 11pt)
 
@@ -120,33 +123,27 @@
   set par(justify: true, leading: 1.5em)
 
   v(15pt)
-  titulo_grande
-  subtitulo
-  linea
+  big-title
+  big-subtitle
+  simple-line
 
-  if caratula {
+  if cover {
     set align(center)
     v(50pt)
     [
       #set text(13pt)
-      #for autor in autores {
-        if autor == autores.last() {
-          autor
-        } else {
-          autor + ", "
-        }
-      }
+      #authors_str
       #v(50pt)
       Universidad Nacional de Río Negro
       #v(50pt)
-      #materia
+      #subject
       #v(50pt)
-      #fecha
+      #date
       #pagebreak()
     ]
   }
 
-  if indice {
+  if toc {
     outline(title: [*Índice*], indent: 1em)
     pagebreak()
   }
