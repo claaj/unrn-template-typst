@@ -1,21 +1,3 @@
-# Prueba
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-## Prueba 2
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-## Prueba 3
-
-![Esto es el logo de la uni!](images/UNRN-color.png)
-
-## Prueba 4
-
-Ver figura 1[^1]
-
-[^1]: Hola
-
 ---
  title: "Template UNRN"
  subtitle: "Esto es un ejemplo"
@@ -32,4 +14,12 @@ Ver figura 1[^1]
  date: "1 de enero de 2077"
  version: "v1.0"
 ---
+
+# Prueba
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Prueba 2
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
