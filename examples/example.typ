@@ -1,19 +1,19 @@
-#import "../template.typ": proyecto
-// Una vez instalado utilizar: #import "@local/unrn-template:1.0.0": proyecto 
+#import "../template.typ": classic
+// Una vez instalado utilizar: #import "@local/unrn-template:1.0.0": classic 
 
 // Valores por defecto
-#show: proyecto.with(
-  titulo: "Template UNRN",
-  subtitulo: "Esto es un ejemplo",
-  indice: true,
-  fuente: "IBM Plex Sans",
-  fuente_mono: "IBM Plex Mono",
-  caratula: true,
-  autores: ("Autor 1", "Autor 2",),
-  materia: "Materia de ejemplo",
-  carrera: "Ingenería en Templates",
-  año: "2077",
-  fecha: "1 de enero de 2077",
+#show: classic.with(
+  title: "Template UNRN",
+  subtitle: "Esto es un ejemplo",
+  toc: true,
+  font: "IBM Plex Sans",
+  monofont: "IBM Plex Mono",
+  cover: true,
+  authors: ("Autor 1", "Autor 2",),
+  subject: "Materia de ejemplo",
+  career: "Ingenería en Templates",
+  year: "2077",
+  date: "1 de enero de 2077",
   version: "v1.0"
 )
 
