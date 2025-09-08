@@ -94,7 +94,7 @@ just build-md-example
 Para transformar de markdown a pdf con este template se puede utilizar el siguiente comando:
 
 ~~~sh
-pandoc foo.md --wrap=none --pdf-engine=typst template=unrn.typ -o foo.pdf
+pandoc foo.md --wrap=none --pdf-engine=typst --template=unrn.typ -o foo.pdf
 ~~~
 
 ## Ejemplos
