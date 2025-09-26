@@ -154,7 +154,7 @@
   show raw.where(block: true): block.with(inset: 7pt, radius: 3pt, width: 100%)
   show raw.where(block: true): block.with(fill: rgb("#f2f2f2"), inset: 7pt, radius: 3pt, width: 100%)
   show raw.where(block: true): text.with(size: 10pt)
-  show raw.where(block: false): text.with(size: 10pt)
+  show raw.where(block: false): text.with(size: 11pt)
 
 
   set footnote.entry(
