@@ -2,146 +2,173 @@
   title: "",
   subtitle: "",
   toc: false,
-  cover: false,
-  font: "IBM Plex Sans",
-  monofont: "IBM Plex Mono",
+  font: "New Computer Modern Sans",
+  monofont: "New Computer Modern Mono",
   authors: (),
   subject: "",
   career: "",
-  year: "",
   date: "",
-  version: "",
-  colormonoblock: rgb("#f2f2f2"),
+  npar: false,
   body,
 ) = {
-  if title == "" {
-    error("Failed to read title")
-  }
-  if authors == () {
-    error("Failed to read author/s")
-  }
-  if subject == "" {
-    errgr("Failed to read subject")
-  }
-  if career == "" {
-    error("Failed to read career")
-  }
-  if year == "" {
-    error("Failed to read year")
-  }
-  if date == "" {
-    error("Failed to read date")
-  }
 
-  let authors_str = authors.join(", ")
-  // let authors_str = authors.map(a => a.name.slice(1, -1)).join(", ")
+  let authors_str = ""
+  if type(authors) == array {
+    authors_str = authors.join(", ")
+  } else {
+    authors_str = authors
+  }
 
   set document(author: authors_str, title: title)
-  set text(font: (font), size: 10pt)
 
-  let simple-line = line(length: 100%, stroke: 0.25pt)
-
-  let right-col = grid(
-    columns: (100%),
-    gutter: 9%,
-    rows: (auto, auto),
-    [#career],
-    [#subject - #year],
-  )
-
-  let unrn-logo = align(left)[#image("images/UNRN-color.png", width: 75%)]
-
-  let header-title = align(right)[#right-col]
-
-  let header-unrn = grid(columns: (auto, auto), rows: (auto), [#unrn-logo], [#header-title])
-
-  let footer = align(left)[
-    #box(width: auto, fill: rgb("#ffffff"), inset: 10pt, [#version])
-  ]
+  set text(font: font, size: 11pt, lang: "es")
 
   set page(
     paper: "a4",
+    margin: (top: 2.5cm, right: 2.5cm, left: 2.5cm, bottom: 1.5cm),
     header: [
       #set text(9pt)
-      #header-unrn
-    ],
-    margin: (top: 1in, right: 1in, left: 1in, bottom: 1in),
-    footer: [
-      #set text(9pt)
       #grid(
-        columns: (50%, 50%),
-        [#footer],
-        [#set align(end)
-          #box(
-            width: auto,
-            fill: rgb("#cccccc"),
-            inset: 8pt,
-            radius: 3pt,
-            [#context counter(page).display((numero, total) => text[Página #numero de #total], both: true)],
-          )],
-      )
-    ],
+      columns: (1fr, 1fr, 1fr),
+      [#image("images/UNRN-logo.jpg", width: 30%)],[#align(center+horizon)[#smallcaps[#title]]],[#align(right+horizon)[#context[#counter(page).display()]]]
+    )
+      #line(length: 100%, stroke: 0.25pt)
+    ]
   )
 
-  show heading.where(level: 1): it => grid(
-    columns: (auto),
-    rows: (auto, auto),
-    gutter: (1.5%),
-    [#align(right)[#it]],
-    [#simple-line],
+  set heading(numbering: "1.1")
+  set math.equation(numbering: "(1)") 
+
+  set par(leading: 1em)
+
+  set list(
+    indent: 0.3cm,
   )
 
-  let empty(..) = ""
-  set heading(numbering: empty)
+  set enum(
+    indent: 0.3cm,
+    full: true
+  )
 
-  let big-title = [
-    #set text(24pt, weight: "extrabold")
-    #set align(center)
-    *#title*
+  [
+   #set page(paper: "a4", header: none, footer: none)
+
+   #v(5em)
+
+   #let bold-line = line(length: 100%, stroke: 0.75pt)
+    
+   #align(center)[#image("images/UNRN.png", width: 65%)]
+
+   #v(1em)
+
+   #bold-line
+
+   #align(center)[#text(size: 32pt, weight: "extrabold")[#title]]
+
+   #v(1em)
+
+   #align(center)[#text(size: 24pt, weight: "bold")[#subtitle]]
+
+   #bold-line
+
+   #v(2em)
+
+   #text(size: 16pt)[
+     #align(center)[#authors_str]
+   ]
+
+   #v(20em)
+
+  #text(size: 13pt)[
+    #align(left)[
+      #career
+
+      #subject
+    ]
   ]
 
-  let big-subtitle = [
-    #set text(16pt, weight: "extrabold")
-    #set align(center)
-    #subtitle
+   #text(size: 13pt)[
+    #align(center + bottom)[#date]
+   ]
+
+   #v(5em)
+
+   #pagebreak()
   ]
 
-  set math.equation(numbering: "(1)")
+    let p = counter("p")
+    let step = p.step()
+
+    let margin = .4em
+
+    let display(visible: bool) = context {
+      let clearance = .4em
+      let numbering = "1"
+      if visible {
+        let num = p.display(numbering)
+        box(align(left)[#h(-1.5em) #num])
+      } else {
+        box(width: 0pt)
+      }
+    }
+
+    let no-par-num = it => context { 
+      let value = p.get()
+      show par: x => { 
+        if x.body.at("children", default: ()).at(0, default: none) == step {
+          x 
+        } 
+        else { 
+            par(step + display(visible: false) + x.body)
+        } 
+      }
+      it
+      p.update(value)
+    }
+
+    show par: it => {
+      context { 
+        if npar {
+        if it.body.at("children", default: ()).at(0, default: none) == step {
+          it
+        } else {
+          par(step + display(visible: true) + it.body)
+        }
+      } else {
+        no-par-num(it)
+      }
+    }}
+
+
+    show list: it => no-par-num(it)
+    show enum: it => no-par-num(it)
+    show terms: it => no-par-num(it)
+    show terms.item: it => no-par-num(it)
+
+    show heading: it => {
+      p.update(0)
+      it
+    }
 
   show raw: set text(font: monofont)
-  show raw.where(block: true): block.with(fill: colormonoblock, inset: 7pt, radius: 3pt, width: 100%)
+  show raw.where(block: true): block.with(inset: 7pt, radius: 3pt, width: 100%)
+  show raw.where(block: true): block.with(fill: rgb("#f2f2f2"), inset: 7pt, radius: 3pt, width: 100%)
   show raw.where(block: true): text.with(size: 10pt)
-  show raw.where(block: false): text.with(size: 11pt)
+  show raw.where(block: false): text.with(size: 10pt)
 
-  show parbreak: it => {
-    it
-    v(10pt)
-  }
+
+  set footnote.entry(
+    separator: [#v(0.2em) #line(length: 100%, stroke: 0.25pt)]
+  )
 
   show table: align.with(center)
-
-  set par(justify: true, leading: 1.5em)
-
-  v(15pt)
-  big-title
-  big-subtitle
-  simple-line
-
-  if cover {
-    set align(center)
-    v(50pt)
-    [
-      #set text(13pt)
-      #authors_str
-      #v(50pt)
-      Universidad Nacional de Río Negro
-      #v(50pt)
-      #subject
-      #v(50pt)
-      #date
-      #pagebreak()
-    ]
-  }
+  show table.cell.where(y: 0): strong
+  set table(
+    column-gutter: 10pt,
+    stroke: (x, y) => if y == 0 {
+      (bottom: 0.7pt + black)
+    },
+  )
 
   if toc {
     outline(title: [*Índice*], indent: 1em)
@@ -149,6 +176,5 @@
   }
 
   body
-}
 
-#let linea = line(length: 100%, stroke: 0.25pt)
+}

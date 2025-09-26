@@ -22,13 +22,10 @@
   date: none,
   subject: none,
   career: none,
-  year: none,
-  version: none,
   font: none,
   monofont: none,
-  colormonoblock: none,
-  cover: none,
   toc: none,
+  npar: none,
   doc,
 ) = {
   classic.with(
@@ -37,18 +34,11 @@
     authors:  authors_to_array(authors),
     date:     if date == none { "" } else { date },
     subject:  if subject == none { "" } else { subject },
-    career:   if career == none { "" } else { career },
-    year:     if year == none { "" } else { year },
-    version:  if version == none { "" } else { version },
-    font:     if font == none { "IBM Plex Sans" } else { font },
-    monofont: if monofont == none { "IBM Plex Mono" } else { monofont },
-    colormonoblock: if colormonoblock == none {
-      rgb("#f2f2f2")
-    } else {
-      if type(colormonoblock) == string { rgb(colormonoblock) } else { colormonoblock }
-    },
-    cover:    if cover == none { false } else { cover },
-    toc:      if toc == none { false } else { toc },
+    career:  if career == none { "" } else { career },
+    font:     if font == none { "New Computer Modern Sans" } else { font },
+    monofont: if monofont == none { "New Computer Modern Mono" } else { monofont },
+    toc:      if toc == none { false } else { true },
+    npar:    if npar == none { false } else { true },
   )(doc)
 }
 
@@ -83,26 +73,17 @@ $endif$
 $if(career)$
   career: "$career$",
 $endif$
-$if(year)$
-  year: "$year$",
-$endif$
-$if(version)$
-  version: "$version$",
-$endif$
 $if(font)$
   font: "$font$",
 $endif$
 $if(monofont)$
   monofont: "$monofont$",
 $endif$
-$if(colormonoblock)$
-  colormonoblock: rgb("$colormonoblock$"),
-$endif$
-$if(cover)$
-  cover: $cover$,
-$endif$
 $if(toc)$
   toc: $toc$,
+$endif$
+$if(npar)$
+  npar: $npar$,
 $endif$
   doc,
 )

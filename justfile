@@ -1,7 +1,8 @@
 default: create-dir copy-files
 
 VERSION := "1.0.0"
-PACKAGE_DIR := "~/.local/share/typst/packages/local/unrn-template/" + VERSION + "/"
+PLUGIN_DIR := "~/.local/share/typst/packages/local/unrn-template/"
+PACKAGE_DIR := PLUGIN_DIR + "/" + VERSION + "/"
 PANDOC_DIR := "~/.local/share/pandoc/templates/"
 
 create-dir:
@@ -19,6 +20,10 @@ copy-files:
 build-example:
   @mkdir -p build
   @typst compile --root .. examples/example.typ build/example.pdf
+
+uninstall:
+  @rm -r {{PLUGIN_DIR}} 
+  @rm {{PANDOC_DIR}}/unrn.typ
 
 build-md-example:
   @mkdir -p build
