@@ -26,24 +26,14 @@ Se puede usar el siguiente código como base:
   title: "Template UNRN",
   subtitle: "Esto es un ejemplo",
   toc: true,
-  font: "IBM Plex Sans",
-  monofont: "IBM Plex Mono",
-  cover: true,
+  font: "New Computer Modern Sans",
+  monofont: "New Computer Modern Mono",
   authors: ("Autor 1", "Autor 2",),
   subject: "Materia de ejemplo",
   career: "Ingenería en Templates",
-  year: "2077",
   date: "1 de enero de 2077",
-  version: "v1.0"
+  npar: false,
 )
-
-= Prueba
-
-#lorem(20)
-
-== Prueba 2
-
-#lorem(20)
 ~~~
 
 Para ver el ejemplo se puede compilar con:
@@ -60,18 +50,16 @@ Esto genera una carpeta `build/` con `example.pdf`
 ---
  title: "Template UNRN"
  subtitle: "Esto es un ejemplo"
- toc: true
- font: "IBM Plex Sans"
- monofont: "IBM Plex Mono"
- cover: true
+ font: "New Computer Modern Sans"
+ monofont: "New Computer Modern Mono"
  author: 
     - name: "Autor 1"
     - name: "Autor 2"
  subject: "Materia de ejemplo"
  career: "Ingenería en Templates"
- year: "2077"
  date: "1 de enero de 2077"
- version: "v1.0"
+ toc: true
+ npar: true
 ---
 
 # Prueba
@@ -96,6 +84,9 @@ Para transformar de markdown a pdf con este template se puede utilizar el siguie
 ~~~sh
 pandoc foo.md --wrap=none --pdf-engine=typst --template=unrn.typ -o foo.pdf
 ~~~
+
+## Parametros
+**TODO**
 
 ## Ejemplos
 
