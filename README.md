@@ -5,7 +5,7 @@ Template Typst para la Universidad Nacional de Río Negro (UNRN).
 ## Dependencias
 - `typst`
 - `just`
-- `pandoc >= 3.1.2` (opcional)
+- `pandoc >= 3.1.2`
 
 ## Instalación
 
